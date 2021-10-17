@@ -63,6 +63,7 @@ export function App() {
     },
     {
       title: '',
+      dataIndex: 'id',
       render: id => <Button onClick={() => handleDeleteInfo(id)}>删除</Button>,
     },
   ];
