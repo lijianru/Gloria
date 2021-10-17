@@ -1,5 +1,9 @@
 export const COOL_DOWN_TIME = [
   {
+    label: '一天',
+    value: 1000 * 60 * 60 * 24 * 1,
+  },
+  {
     label: '三天',
     value: 1000 * 60 * 60 * 24 * 3,
   },

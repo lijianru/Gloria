@@ -1,5 +1,5 @@
 import { message } from 'antd';
-import { differenceInDays, differenceInHours, differenceInMinutes } from 'date-fns';
+import { differenceInDays } from 'date-fns';
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
@@ -12,7 +12,7 @@ export type State = {
 };
 
 const initialState: State = {
-  coolDownTime: COOL_DOWN_TIME[0].value,
+  coolDownTime: COOL_DOWN_TIME[2].value,
   infoList: [],
 };
 
@@ -34,7 +34,7 @@ export const infoSlice = createSlice({
           time: currentTime,
         });
 
-        message.success('恭喜这个B！🎉🎉🎉🎉🎉🎉', 5000);
+        message.success('恭喜这个B！🎉🎉🎉🎉🎉🎉');
       } else if (currentTime - findedInfo.time > state.coolDownTime) {
         state.infoList = [...state.infoList.filter(({ id }) => id !== action.payload)];
 
@@ -44,20 +44,16 @@ export const infoSlice = createSlice({
           time: currentTime,
         });
 
-        message.success('恭喜这个B！🎉🎉🎉🎉🎉🎉', 5000);
+        message.success('恭喜这个B！🎉🎉🎉🎉🎉🎉');
       } else {
-        message.error(
-          `此账号还在CD中（${differenceInDays(currentTime, findedInfo.time)}天${differenceInHours(
-            currentTime,
-            findedInfo.time
-          )}小时${differenceInMinutes(currentTime, findedInfo.time)}分钟）!`
-        );
+        const cd = differenceInDays(currentTime, findedInfo.time) + 1;
+        message.error(`此账号还在CD中，${cd}天内登陆过此账号!`);
       }
     },
     deleteInfo: (state, action: PayloadAction<string>) => {
       state.infoList = [...state.infoList.filter(({ id }) => id !== action.payload)];
 
-      message.success('删除成功！🎉🎉🎉🎉🎉🎉', 5000);
+      message.success('删除成功！🎉🎉🎉🎉🎉🎉');
     },
   },
 });

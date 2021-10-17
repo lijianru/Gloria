@@ -70,6 +70,7 @@ export function App() {
 
   return (
     <div className="container mx-auto py-10">
+      <h1 className="py-1">格洛丽亚单人三排ID记录系统</h1>
       <div className="container flex flex-row">
         <Input size="large" value={newId} onChange={handleInputChange} />
         <Button
