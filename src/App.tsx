@@ -79,9 +79,9 @@ export function App() {
 
   return (
     <div className="container mx-auto py-10">
-      <p className="text-2xl">
-        格洛丽亚单人三排ID记录工具{' '}
-        <a className="text-xl" onClick={handleClickDrawer}>
+      <p className="text-2xl pb-4">
+        格洛丽亚单人三排ID记录工具
+        <a className="text-blue text-xl" onClick={handleClickDrawer}>
           [使用说明]
         </a>
       </p>
