@@ -1,4 +1,4 @@
-import { Button, Input, Radio, RadioChangeEvent, Table } from 'antd';
+import { Button, Drawer, Input, Radio, RadioChangeEvent, Table } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import { format } from 'date-fns';
 import { useAppDispatch } from 'hooks/useAppDispatch';
@@ -20,6 +20,7 @@ export function App() {
   const coolDownTime = useAppSelector(state => state.info.coolDownTime);
 
   const [newId, setNewId] = useState<string>();
+  const [visiable, setVisiable] = useState(false);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setNewId(e.target.value);
@@ -36,6 +37,14 @@ export function App() {
 
   const handleDeleteInfo = (id: string) => {
     dispatch(deleteInfo(id));
+  };
+
+  const handleClickDrawer = () => {
+    setVisiable(true);
+  };
+
+  const handleCloseDrawer = () => {
+    setVisiable(false);
   };
 
   const columns: ColumnsType<Info> = [
@@ -70,9 +79,14 @@ export function App() {
 
   return (
     <div className="container mx-auto py-10">
-      <h1 className="py-1">格洛丽亚单人三排ID记录系统</h1>
+      <p className="text-2xl">
+        格洛丽亚单人三排ID记录工具{' '}
+        <a className="text-xl" onClick={handleClickDrawer}>
+          [使用说明]
+        </a>
+      </p>
       <div className="container flex flex-row">
-        <Input size="large" value={newId} onChange={handleInputChange} />
+        <Input placeholder="请输入ID" size="large" value={newId} onChange={handleInputChange} />
         <Button
           size="large"
           className="ml-4"
@@ -104,6 +118,37 @@ export function App() {
         rowKey={({ id }) => id}
         className="py-10"
       />
+      <Drawer
+        title="使用说明"
+        onClose={handleCloseDrawer}
+        maskClosable={true}
+        width={500}
+        visible={visiable}
+      >
+        <h2>使用方法：</h2>
+        <ul>
+          <li>1. 选择CD（默认七天）</li>
+          <li>2. 在输入框填入ID（保证ID正确，别粘日期😭）</li>
+          <li>3. 点击添加按钮（无需搜索）</li>
+          <li className="pl-2">
+            3.1. 没打过会直接添加账号并提示"<i className="font-bold">恭喜这个B</i>"；
+          </li>
+          <li className="pl-2">
+            3.2. 打过但CD结束则更新记录并依然提示"<i className="font-bold">恭喜这个B</i>"；
+          </li>
+          <li className="pl-2">
+            3.3. 打过但还在CD中不会更新记录但会提示"
+            <i className="font-bold">账号还在CD中，几天内登录过该账号</i>
+            "。
+          </li>
+        </ul>
+        <p>注：CD根据添加新ID或者成功更新ID的时间计算！</p>
+        <p>
+          重要提示：由于我考虑到ID的隐私性且未了避嫌且自己没有云服务所以我采用了GitHub pages
+          加本地存储的静态页面方式实现。
+          <i className="font-bold text-xl">所以切记不要清空浏览器缓存</i>。
+        </p>
+      </Drawer>
     </div>
   );
 }

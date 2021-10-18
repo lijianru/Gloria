@@ -24,22 +24,23 @@ export const infoSlice = createSlice({
       state.coolDownTime = action.payload;
     },
     addNewInfo: (state, action: PayloadAction<string>) => {
-      const findedInfo = state.infoList.find(({ id }) => id === action.payload);
+      const currentId = action.payload.trim();
+      const findedInfo = state.infoList.find(({ id }) => id === currentId);
       const currentTime = new Date().getTime();
 
       if (!findedInfo) {
         state.infoList.unshift({
-          id: action.payload,
+          id: currentId,
           count: 1,
           time: currentTime,
         });
 
         message.success('恭喜这个B！🎉🎉🎉🎉🎉🎉');
       } else if (currentTime - findedInfo.time > state.coolDownTime) {
-        state.infoList = [...state.infoList.filter(({ id }) => id !== action.payload)];
+        state.infoList = [...state.infoList.filter(({ id }) => id !== currentId)];
 
         state.infoList.unshift({
-          id: action.payload,
+          id: findedInfo.id,
           count: findedInfo.count + 1,
           time: currentTime,
         });
@@ -47,13 +48,13 @@ export const infoSlice = createSlice({
         message.success('恭喜这个B！🎉🎉🎉🎉🎉🎉');
       } else {
         const cd = differenceInDays(currentTime, findedInfo.time) + 1;
-        message.error(`此账号还在CD中，${cd}天内登陆过此账号!`);
+        message.error(`此账号还在CD中，${cd}天内登陆过此账号!😭😭😭😭😭😭😭`);
       }
     },
     deleteInfo: (state, action: PayloadAction<string>) => {
       state.infoList = [...state.infoList.filter(({ id }) => id !== action.payload)];
 
-      message.success('删除成功！🎉🎉🎉🎉🎉🎉');
+      message.success('删除成功！');
     },
   },
 });
