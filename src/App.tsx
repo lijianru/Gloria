@@ -81,7 +81,7 @@ export function App() {
     <div className="container mx-auto py-10">
       <p className="text-2xl pb-4">
         格洛丽亚单人三排ID记录工具
-        <a className="text-blue text-xl" onClick={handleClickDrawer}>
+        <a className="text-blue-600 text-xl" onClick={handleClickDrawer}>
           [使用说明]
         </a>
       </p>
